@@ -36,6 +36,19 @@ namespace SimpleEvaluator
 		static Calculator()
 		{
 			Functions=new ();
+			// Register Embedded Functions
+			RegisterFunction(typeof(PiFunctionPlugIn));
+			RegisterFunction(typeof(SinFunctionPlugIn));
+			RegisterFunction(typeof(CosFunctionPlugIn));
+			RegisterFunction(typeof(AbsFunctionPlugIn));
+			RegisterFunction(typeof(SqrtFunctionPlugIn));
+			RegisterFunction(typeof(IffFunctionPlugIn));
+			RegisterFunction(typeof(FormatFunctionPlugIn));
+			RegisterFunction(typeof(UpperFunctionPlugIn));
+			RegisterFunction(typeof(SubStringFunctionPlugIn));
+			RegisterFunction(typeof(XPathFunctionPlugIn));
+			RegisterFunction(typeof(NowFunctionPlugIn));
+			RegisterFunction(typeof(GuidFunctionPlugIn));
 		}
 
 		public  Calculator(IVariableProvider VariableProvider)
