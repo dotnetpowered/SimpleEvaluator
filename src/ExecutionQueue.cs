@@ -1,33 +1,15 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace SimpleEvaluator
 {
-	public class ExecutionQueue : Queue
+	public class ExecutionQueue : Queue<ExecutionItem>
 	{
 		public ExecutionQueue()
 		{
 		}
 
-		private new void Enqueue(object ob)
-		{
-		}
-
-		public void Enqueue(ExecutionItem ei)
-		{
-			base.Enqueue(ei);
-		}
-
-		public new ExecutionItem Dequeue()
-		{
-			return (ExecutionItem)base.Dequeue();
-		}
-
-		public new ExecutionItem Peek()
-		{
-			return (ExecutionItem)base.Peek();
-		}
-
-		public new ExecutionQueue Clone()
+		public ExecutionQueue Clone()
 		{
 			ExecutionQueue retEQ = new ExecutionQueue();
 			IEnumerator ieNum = this.GetEnumerator();

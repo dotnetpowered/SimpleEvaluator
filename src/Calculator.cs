@@ -4,7 +4,6 @@
 // Modified by Brian Ritchie to support Function Plugins & External Variable Providers
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using SimpleEvaluator.Functions;
 
@@ -24,7 +23,7 @@ namespace SimpleEvaluator
 	{
 		private static Dictionary<string, IFunctionPlugIn> Functions;
 		private Dictionary<string, IFunctionPlugIn> LocalFunctions;
-		private CalcStack calcStack;
+		private Stack<Variant> calcStack;
 		public IVariableProvider Variables;
 
 		public static void RegisterFunction(Type FunctionPlugIn)
@@ -53,7 +52,7 @@ namespace SimpleEvaluator
 
 		public  Calculator(IVariableProvider VariableProvider)
 		{
-			calcStack = new CalcStack();
+			calcStack = new ();
 			Variables=VariableProvider;
 			LocalFunctions=new ();
 		}
@@ -196,15 +195,15 @@ namespace SimpleEvaluator
 
 		private Variant EmbeddedFunction(FunctionDesc fd)
 		{
-			IFunctionPlugIn plugin=Functions[fd.functionName.ToUpper()];
+			IFunctionPlugIn plugin=Functions[fd.FunctionName.ToUpper()];
 			if (plugin==null)
-				plugin=LocalFunctions[fd.functionName.ToUpper()];
+				plugin=LocalFunctions[fd.FunctionName.ToUpper()];
 			if (plugin==null)
-				throw new CalcException("Invalid function name: "+fd.functionName);
+				throw new CalcException("Invalid function name: "+fd.FunctionName);
 			else
 			{
 				if (plugin.ExpectedArgumentCount!=fd.Count)
-					throw new CalcException(fd.functionName+" expects "+plugin.ExpectedArgumentCount.ToString()+" parameters");
+					throw new CalcException(fd.FunctionName+" expects "+plugin.ExpectedArgumentCount.ToString()+" parameters");
 				else
 				{
 					return plugin.Evaluate(fd);
